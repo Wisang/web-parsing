@@ -1,8 +1,11 @@
 from bs4 import BeautifulSoup
 
-with open("website.html", encoding="UTF8") as file:
-    contents = file.read()
+import requests
 
-soup = BeautifulSoup(contents, "html.parser")
+response = requests.get("https://www.ycombinator.com/people/")
 
-print(soup.find_all(name="a")[1])
+yc_web_page = response.text
+
+soup = BeautifulSoup(yc_web_page, "html.parser")
+
+print(soup.find(name="a").get("href"))
